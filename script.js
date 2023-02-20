@@ -9,7 +9,7 @@ const quizData = [
         d: 'Oh, go to hell',
         correct: 'a'
     }, {
-        question: 'What is the most used programming language in 2020?',
+        question: 'What is the most used programming language in 2023?',
         a: 'Java',
         b: 'C',
         c: 'JavaScript',
@@ -27,12 +27,12 @@ const quizData = [
         a: 'George Clooney',
         b: 'Ben Afleck',
         c: 'Tomothy Chalamet-Malameh',
-        d: 'Your mom',
+        d: 'Me',
         correct: 'a'
     }, {
         question: 'Would you like this quiz to end?',
         a: 'No, I want more stupid questions',
-        b: 'End it if you already got my personality type',
+        b: 'End it if you already got my personality type :)',
         c: 'c',
         d: 'Yes',
         correct: 'd'
@@ -47,6 +47,8 @@ const b_text = document.querySelector('#b_text');
 const c_text = document.querySelector('#c_text');
 const d_text = document.querySelector('#d_text');
 const submitBtn = document.querySelector('button');
+const answerEls = document.querySelectorAll('.answer');
+const quiz = document.querySelector('#quiz');
 
 
 
@@ -62,6 +64,7 @@ loadQuiz(); // call everytime we submit
 
 
 function loadQuiz() {
+    deselectAnswers();
     const currentQuizData = quizData[currentQuiz];
 
     questionEl.innerText = currentQuizData.question;
@@ -75,8 +78,6 @@ function loadQuiz() {
 
 function getSelected() {
 
-    const answerEls = document.querySelectorAll('.answer');
-
     let answer = undefined;
 
     answerEls.forEach(answerEl => {
@@ -85,6 +86,13 @@ function getSelected() {
         }
     });
     return answer;
+}
+
+
+function deselectAnswers() {
+    answerEls.forEach(answerEl => {
+        answerEl.checked = false;
+    });
 }
 
 // EVENTS
@@ -102,8 +110,10 @@ submitBtn.addEventListener('click', () => {
         if (currentQuiz < quizData.length) {
             loadQuiz();
         } else {
-            // todo: show right answers count
-            alert('You finished the Quiz, to onboard me in your team, please call me at 094710253')
+            quiz.innerHTML = `<h2>You answered correctly at ${score} of the
+            ${quizData.length} questions AND You finished the Quiz, to onboard me in your team, please call me at: 094710253</h2>
+            <button onclick="location.reload()">Reload</button>`
+
         }
     }
 });
